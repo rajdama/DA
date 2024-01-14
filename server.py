@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request
-import pandas as pd
+from flask import Flask, render_template, request, send_file
+import os
 from script import report
 
 app = Flask(__name__)
@@ -18,8 +18,9 @@ def upload_file():
 
         if file:
             report(file)
-            return 'File uploaded and processed successfully'
-
+            response = send_file('output_file.xlsx', as_attachment=True)
+            return response
+    
     return render_template('upload.html')
 
 if __name__ == '__main__':
